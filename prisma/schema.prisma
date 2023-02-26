@@ -1,0 +1,68 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+  name  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  verified Boolean @default(false)
+  locked   Boolean @default(false)
+
+  password Password?
+  client   Client[]
+}
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Token {
+  hash      String
+  userId    String   @unique
+  createdAt DateTime @default(now())
+}
+
+model LoginAttempts {
+  userId    String   @unique
+  attempts  Int
+  createdAt DateTime @default(now())
+}
+
+model Client {
+  id          String  @id @default(cuid())
+  name        String
+  email       String?
+  phoneNumber String?
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  note Note[]
+}
+
+model Note {
+  id   String @id @default(cuid())
+  body String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  clientId String
+}

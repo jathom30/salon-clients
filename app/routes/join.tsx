@@ -7,6 +7,7 @@ import { getUserId, createUserSession } from "~/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { Button, FlexList } from "~/components";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
@@ -92,7 +93,7 @@ export default function Join() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
             >
               Email address
             </label>
@@ -107,7 +108,7 @@ export default function Join() {
                 autoComplete="email"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full input input-bordered"
               />
               {actionData?.errors?.email && (
                 <div className="pt-1 text-red-700" id="email-error">
@@ -120,7 +121,7 @@ export default function Join() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium"
             >
               Password
             </label>
@@ -133,10 +134,10 @@ export default function Join() {
                 autoComplete="new-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="w-full input input-bordered"
               />
               {actionData?.errors?.password && (
-                <div className="pt-1 text-red-700" id="password-error">
+                <div className="pt-1 text-error" id="password-error">
                   {actionData.errors.password}
                 </div>
               )}
@@ -144,17 +145,14 @@ export default function Join() {
           </div>
 
           <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
-            Create Account
-          </button>
+          <FlexList>
+            <Button type="submit" kind="primary" size="md">Create Account</Button>
+          </FlexList>
           <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
+            <div className="text-center text-sm">
               Already have an account?{" "}
               <Link
-                className="text-blue-500 underline"
+                className="link link-accent"
                 to={{
                   pathname: "/login",
                   search: searchParams.toString(),

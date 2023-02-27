@@ -8,12 +8,14 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { themeChange } from 'theme-change'
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
 
 import faStylesheetUrl from '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { useEffect } from "react";
 // Prevent fontawesome from dynamically adding its css since we are going to include it manually
 config.autoAddCss = false;
 
@@ -40,6 +42,10 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function App() {
+  useEffect(() => {
+    themeChange(false)
+    // 👆 false parameter is required for react project
+  })
   return (
     <html lang="en" className="h-full bg-base-300">
       <head>

@@ -34,14 +34,14 @@ export default function Client() {
         <FlexHeader>
           <Title>{client.name}</Title>
           <FlexList direction="row">
-            <Link to="edit" isOutline kind="accent" isRounded><FontAwesomeIcon icon={faPencil} /></Link>
+            <Link to="edit" isOutline isRounded><FontAwesomeIcon icon={faPencil} /></Link>
             <Link to="delete" kind="error" isRounded><FontAwesomeIcon icon={faTrash} /></Link>
           </FlexList>
         </FlexHeader>
       </ItemBox>
       <FlexHeader>
         <Label>Details</Label>
-        <Link kind="accent" icon={faPencil} to="details">Edit details</Link>
+        <Link isOutline icon={faPencil} to="details">Edit details</Link>
       </FlexHeader>
       <ItemBox>
         <FlexList direction="row">
@@ -63,8 +63,10 @@ export default function Client() {
           <FlexHeader>
             <span>{(new Date(note.createdAt).toDateString())}</span>
             <FlexList direction="row">
-              <Link kind="accent" isOutline isRounded to={`note/${note.id}`}><FontAwesomeIcon icon={faPencil} /></Link>
-              <Link kind="error" isRounded to={`note/delete/${note.id}`}><FontAwesomeIcon icon={faTrash} /></Link>
+              <Link isOutline isRounded to={`note/${note.id}`}><FontAwesomeIcon icon={faPencil} /></Link>
+              {notes.length > 1 ? (
+                <Link kind="error" isOutline isRounded to={`note/delete/${note.id}`}><FontAwesomeIcon icon={faTrash} /></Link>
+              ) : null}
             </FlexList>
           </FlexHeader>
           <FlexList gap={2}>

@@ -18,7 +18,7 @@ export function getClients({ userId, q }: { userId: User['id']; q?: string }) {
         }
       })
     },
-    select: { id: true, name: true },
+    select: { id: true, name: true, updateAt: true },
     orderBy: { name: 'asc' }
   })
 }
@@ -46,7 +46,7 @@ export function deleteClient({ id, userId }: Pick<Client, 'id'> & { userId: User
   })
 }
 
-export function editClient(id: Client['id'], client: Partial<Client>) {
+export function updateClient(id: Client['id'], client: Partial<Client>) {
   return prisma.client.update({
     where: { id },
     data: client

@@ -40,7 +40,9 @@ export default function ClientsList() {
       </div>
       <FlexList pad={4}>
         {clients.map(client => (
-          <RemixLink className="bg-base-100 p-2 shadow-md rounded outline-2 outline-offset-2 hover:outline hover:outline-accent hover:shadow-xl focus-visible:outline-accent focus-visible:outline-offset-4" key={client.id} to={`${client.id}`}>{client.name}</RemixLink>
+          <RemixLink className="bg-base-100 p-2 shadow-md rounded outline-2 outline-offset-2 hover:outline hover:outline-accent hover:shadow-xl focus-visible:outline-accent focus-visible:outline-offset-4" key={client.id} to={`${client.id}`}>
+            <span>{client.name}</span>
+          </RemixLink>
         ))}
       </FlexList>
     </>

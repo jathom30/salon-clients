@@ -33,20 +33,30 @@ export default function Client() {
       <ItemBox>
         <FlexHeader>
           <Title>{client.name}</Title>
-          <Link to="delete" kind="error" isCollapsing icon={faTrash}>Delete</Link>
+          <FlexList direction="row">
+            <Link to="edit" isOutline kind="accent" isRounded><FontAwesomeIcon icon={faPencil} /></Link>
+            <Link to="delete" kind="error" isRounded><FontAwesomeIcon icon={faTrash} /></Link>
+          </FlexList>
         </FlexHeader>
       </ItemBox>
-      <Label>Details</Label>
+      <FlexHeader>
+        <Label>Details</Label>
+        <Link kind="accent" icon={faPencil} to="details">Edit details</Link>
+      </FlexHeader>
       <ItemBox>
-        <span>phone number</span>
-        <span>email</span>
+        <FlexList direction="row">
+          <Label>Phone number</Label>
+          <span>{client.phoneNumber ?? '--'}</span>
+        </FlexList>
+        <FlexList direction="row">
+          <Label>Email</Label>
+          <span>{client.email ?? '--'}</span>
+        </FlexList>
       </ItemBox>
 
       <FlexHeader items="center">
         <Label>Notes</Label>
-        <Link to="note" kind="secondary" isRounded>
-          <FontAwesomeIcon icon={faPlus} />
-        </Link>
+        <Link to="note" kind="primary" icon={faPlus}>New note</Link>
       </FlexHeader>
       {notes.map(note => (
         <ItemBox key={note.id}>
@@ -54,7 +64,7 @@ export default function Client() {
             <span>{(new Date(note.createdAt).toDateString())}</span>
             <FlexList direction="row">
               <Link kind="accent" isOutline isRounded to={`note/${note.id}`}><FontAwesomeIcon icon={faPencil} /></Link>
-              <Link kind="error" isOutline isRounded to={`note/delete/${note.id}`}><FontAwesomeIcon icon={faTrash} /></Link>
+              <Link kind="error" isRounded to={`note/delete/${note.id}`}><FontAwesomeIcon icon={faTrash} /></Link>
             </FlexList>
           </FlexHeader>
           <FlexList gap={2}>
@@ -64,7 +74,7 @@ export default function Client() {
           </FlexList>
         </ItemBox>
       ))}
-      <Modal open={['note', 'delete'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
+      <Modal open={['note', 'delete', 'details', 'edit'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
         <Outlet />
       </Modal>
     </FlexList>

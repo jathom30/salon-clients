@@ -41,18 +41,18 @@ export default function ClientsList() {
           <SearchInput value={query} onClear={handleClearQuery} onChange={e => setQuery(e.target.value)} />
         </Form>
       </div>
-      <FlexList pad={4}>
+      <FlexList pad={4} gap={2}>
         {clients.length === 0 ? (
           <FlexList items="center">
             <FontAwesomeIcon size="4x" icon={faMagnifyingGlass} />
             {query ? (
               <>
-                <span>No contacts found matching that name.</span>
+                <span className="text-center">No contacts found matching that name.</span>
                 <Button kind="secondary" onClick={handleClearQuery}>Clear Search</Button>
               </>
             ) : (
               <>
-                <span>Looks like you don't have any contacts created yet</span>
+                <span className="text-center">Looks like you don't have any contacts created yet</span>
                 <Link kind="primary" icon={faPlus} to="new">Create your first here</Link>
               </>
             )}

@@ -1,11 +1,10 @@
-import { faEdit, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faEdit, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Outlet, useLoaderData, useLocation, useNavigate } from "@remix-run/react";
 import { Button, Divider, FlexHeader, FlexList, ItemBox, Label, Link, Modal } from "~/components";
 import { requireUser } from "~/session.server";
-import { capitalizeFirstLetter } from "~/utils/assorted";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await requireUser(request)
@@ -17,7 +16,6 @@ export default function User() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  const themes = ["cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"].sort()
 
   return (
     <FlexList pad={4}>
@@ -25,12 +23,8 @@ export default function User() {
         <Label>Theme</Label>
         <select name="theme" className="select select-bordered w-full" data-choose-theme>
           <option value="">Default</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          {themes.map(theme => (
-            <option key={theme} value={theme}>{capitalizeFirstLetter(theme)}</option>
-
-          ))}
+          <option value="cupcake">Light</option>
+          <option value="halloween">Dark</option>
         </select>
       </FlexList>
 
@@ -63,6 +57,18 @@ export default function User() {
           <FlexList gap={2}>
             <Label>Password</Label>
             <span>********</span>
+          </FlexList>
+        </ItemBox>
+      </FlexList>
+
+      <Divider />
+
+      <FlexList gap={2}>
+        <Label>Backup your clients</Label>
+        <ItemBox>
+          <FlexList gap={2}>
+            <p>You can backup your clients at any time by downloading them and saving them to your machine. Click the button below to download your client list as a csv file.</p>
+            <Button icon={faDownload} isOutline>Download CSV</Button>
           </FlexList>
         </ItemBox>
       </FlexList>

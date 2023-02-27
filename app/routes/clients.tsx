@@ -41,7 +41,7 @@ export default function Clients() {
       </MaxWidth>
       <Modal open={showMenu} onClose={() => setShowMenu(false)}>
         <FlexList pad={4}>
-          <Link to="user" icon={faCog} isOutline size="md">User settings</Link>
+          <Link to="user" icon={faCog} onClick={() => setShowMenu(false)} isOutline size="md">User settings</Link>
           <Form method="post" action="/logout">
             <FlexList>
               <Button type="submit" icon={faSignOut}>Log out</Button>

@@ -14,7 +14,7 @@ export async function loader({ request }: LoaderArgs) {
 export async function action({ request }: ActionArgs) {
   const user = await requireUser(request)
   await deleteUserByEmail(user.email)
-  redirect('/')
+  return redirect('/')
 }
 
 export default function DeleteUser() {

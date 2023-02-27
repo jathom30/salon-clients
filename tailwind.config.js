@@ -14,12 +14,12 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
+    themes: ['cupcake', 'halloween'],
     styled: true,
     base: true,
     utils: true,
     logs: true,
     rtl: false,
     prefix: "",
-    darkTheme: "dark",
   }
 };

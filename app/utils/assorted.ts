@@ -1,1 +1,14 @@
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+/**
+ * @returns domain URL (without a ending slash, like: https://kentcdodds.com)
+ */
+export function getDomainUrl(request: Request) {
+  const host =
+    request.headers.get('X-Forwarded-Host') ?? request.headers.get('host')
+  if (!host) {
+    throw new Error('Could not determine domain URL.')
+  }
+  const protocol = host.includes('localhost') ? 'http' : 'https'
+  return `${protocol}://${host}`
+}

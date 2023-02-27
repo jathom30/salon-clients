@@ -61,7 +61,7 @@ export default function Client() {
       {notes.map(note => (
         <ItemBox key={note.id}>
           <FlexHeader>
-            <span>{(new Date(note.createdAt).toDateString())}</span>
+            <span><span className="text-xs">Created</span> {(new Date(note.createdAt).toDateString())}</span>
             <FlexList direction="row">
               <Link isOutline isRounded to={`note/${note.id}`}><FontAwesomeIcon icon={faPencil} /></Link>
               {notes.length > 1 ? (

@@ -33,7 +33,7 @@ export default function DeleteUser() {
           <p>Are you sure you want to delete your account? This will delete all client data as well. This is a perminent action.</p>
         </FlexList>
         <div className="bg-base-100 shadow-2xl flex flex-col p-4 gap-2 w-full sm:flex-row-reverse xl:rounded-md">
-          <Button size="md" type="submit" kind="error" icon={faTrash} isSaving={isSubmitting}>{isSubmitting ? 'Deleting...' : 'Delete client'}</Button>
+          <Button size="md" type="submit" kind="error" icon={faTrash} isSaving={isSubmitting}>{isSubmitting ? 'Deleting...' : 'Delete account'}</Button>
           <Link to="..">Cancel</Link>
         </div>
       </Form>

@@ -1,6 +1,7 @@
 import type { User, Client } from '@prisma/client'
 
 import { prisma } from "~/db.server";
+import type { ExpectedFileType } from '~/routes/clients/user/upload';
 
 export function getClient({ id, userId }: Pick<Client, 'id'> & { userId: User['id'] }) {
   return prisma.client.findFirst({
@@ -51,4 +52,20 @@ export function updateClient(id: Client['id'], client: Partial<Client>) {
     where: { id },
     data: client
   })
+}
+
+export async function bulkUpload(clients: ExpectedFileType, userId: Client['userId']) {
+  return await Promise.all(clients.map(async client => {
+    return await prisma.client.create({
+      data: {
+        name: client.name,
+        email: client.email,
+        phoneNumber: client.phone_number,
+        userId,
+        note: {
+          create: client.notes.map(note => ({ body: note.detail, createdAt: new Date(note.date) }))
+        }
+      }
+    })
+  }))
 }

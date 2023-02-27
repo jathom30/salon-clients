@@ -1,4 +1,4 @@
-import { faDownload, faEdit, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faEdit, faSignOut, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -64,7 +64,10 @@ export default function User() {
       <Divider />
 
       <FlexList gap={2}>
-        <Label>Backup your clients</Label>
+        <FlexHeader>
+          <Label>Backup your clients</Label>
+          <Link to="upload" isOutline icon={faUpload}>Upload</Link>
+        </FlexHeader>
         <ItemBox>
           <FlexList gap={2}>
             <p>You can backup your clients at any time by downloading them and saving them to your machine. Click the button below to download your client list as a csv file.</p>
@@ -93,7 +96,7 @@ export default function User() {
           </FlexList>
         </ItemBox>
       </FlexList>
-      <Modal open={['delete', 'password', 'edit'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
+      <Modal open={['delete', 'password', 'edit', 'upload'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
         <Outlet />
       </Modal>
     </FlexList>

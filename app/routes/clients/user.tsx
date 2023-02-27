@@ -4,18 +4,30 @@ import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Outlet, useLoaderData, useLocation, useNavigate } from "@remix-run/react";
 import { Button, Divider, FlexHeader, FlexList, ItemBox, Label, Link, Modal } from "~/components";
+import { getClientsAndNotes } from "~/models/client.server";
 import { requireUser } from "~/session.server";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await requireUser(request)
-  return json({ user })
+  const clients = await getClientsAndNotes(user.id)
+  const jsonClients = JSON.stringify(clients)
+  return json({ user, jsonClients })
 }
 
+
 export default function User() {
-  const { user } = useLoaderData<typeof loader>()
+  const { user, jsonClients } = useLoaderData<typeof loader>()
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
+  const handleDownload = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsonClients)
+    const link = document.createElement('a')
+    link.setAttribute('href', dataStr)
+    link.setAttribute('download', `${user.name}-clients.json`)
+    document.body.appendChild(link)
+    link.click()
+  }
 
   return (
     <FlexList pad={4}>
@@ -70,8 +82,8 @@ export default function User() {
         </FlexHeader>
         <ItemBox>
           <FlexList gap={2}>
-            <p>You can backup your clients at any time by downloading them and saving them to your machine. Click the button below to download your client list as a csv file.</p>
-            <Button icon={faDownload} isOutline>Download CSV</Button>
+            <p>You can backup your clients at any time by downloading them and saving them to your machine. Click the button below to download your client list as a json file.</p>
+            <Button onClick={handleDownload} icon={faDownload} isOutline>Download JSON</Button>
           </FlexList>
         </ItemBox>
       </FlexList>

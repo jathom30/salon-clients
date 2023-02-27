@@ -24,6 +24,13 @@ export function getClients({ userId, q }: { userId: User['id']; q?: string }) {
   })
 }
 
+export async function getClientsAndNotes(userId: User['id']) {
+  return prisma.client.findMany({
+    where: { userId },
+    select: { name: true, email: true, phoneNumber: true, note: { select: { createdAt: true, body: true } } },
+  })
+}
+
 export function createClient({
   name, email, phoneNumber, userId
 }: { name: Client['name'], email?: Client['email'], phoneNumber: Client['phoneNumber'] } & { userId: User['id'] }) {

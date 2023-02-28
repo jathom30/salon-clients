@@ -52,8 +52,8 @@ export default function ClientsList() {
               </>
             ) : (
               <>
-                <span className="text-center">Looks like you don't have any contacts created yet</span>
-                <Link kind="primary" icon={faPlus} to="new">Create your first here</Link>
+                <span className="text-center">Looks like you don't have any clients created yet</span>
+                <Link kind="primary" icon={faPlus} to="new">Create your first</Link>
               </>
             )}
           </FlexList>

@@ -24,7 +24,7 @@ export default function VerificationSent() {
       <ItemBox>
         <FlexList>
           <p>We've sent you an email with a verification link.</p>
-          <p>Please click the link in that email to verify your account and start using <strong>clients.pro</strong></p>
+          <p>Please click the link in that email to verify your account and start using <strong>salonclients.xyz</strong></p>
         </FlexList>
       </ItemBox>
       <Form method="put">

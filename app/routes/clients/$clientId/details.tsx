@@ -1,4 +1,4 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, useActionData } from "@remix-run/react";
 import type { ActionArgs, LoaderArgs, SerializeFrom } from "@remix-run/node";
@@ -65,7 +65,7 @@ export default function EditDetails() {
       <Navbar>
         <FlexHeader>
           <Title>Edit details</Title>
-          <Link kind="ghost" isRounded to="details"><FontAwesomeIcon icon={faTrash} /></Link>
+          <Link kind="ghost" isRounded to="details"><FontAwesomeIcon icon={faTimes} /></Link>
         </FlexHeader>
       </Navbar>
       <Form method="put">

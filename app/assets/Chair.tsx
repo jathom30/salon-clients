@@ -1,10 +1,6 @@
-import React from "react";
-import { getColor } from "~/utils/tailwindColors";
-
-
 export const Chair = () => {
-  const primary = getColor('accent')
-  const accent = getColor('primary')
+  const { primary, accent } = { primary: '#FB8500', accent: 'lightgrey' }
+
   return (
     <svg className="h-full w-full" viewBox="0 0 339 338" xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2">
       <path d="M784.75 444.13a1.693 1.693 0 0 0-.213-.014h-33.93c-.069 0-.139.004-.208.014l-61.185 8.471a1.523 1.523 0 0 0 .209 3.03h155.135a1.522 1.522 0 0 0 .213-3.029l-60.021-8.472Z" fill={accent} transform="translate(-625.296 -118.18)" />

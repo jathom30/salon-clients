@@ -34,9 +34,8 @@ export default function User() {
       <FlexList gap={2}>
         <Label>Theme</Label>
         <select name="theme" className="select select-bordered w-full" data-choose-theme>
-          <option value="">Default</option>
           <option value="cupcake">Light</option>
-          <option value="halloween">Dark</option>
+          <option value="dracula">Dark</option>
         </select>
       </FlexList>
 

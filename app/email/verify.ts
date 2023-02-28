@@ -6,7 +6,7 @@ export const verifyAccount = (email: string, magicLink: string) => {
 
   const msg = {
     to: email,
-    from: 'support@setlists.pro',
+    from: 'support@salonclients.xyz',
     subject: 'Verify your email',
     html: `<html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -183,7 +183,7 @@ export const verifyAccount = (email: string, magicLink: string) => {
     <tbody>
       <tr>
         <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center">If you did not create an account with us, ignore this email.</div>
-<div style="font-family: inherit; text-align: center">If you have any questions, email us at <a href="mailto:support@setlists.pro?subject=&amp;body=">support@setlists.pro</a></div><div></div></div></td>
+<div style="font-family: inherit; text-align: center">If you have any questions, email us at <a href="mailto:support@salonclients.xyz?subject=&amp;body=">support@salonclients.xyz</a></div><div></div></div></td>
       </tr>
     </tbody>
   </table></td>

@@ -6,7 +6,7 @@ export const passwordReset = (email: string, magicLink: string) => {
 
   const msg = {
     to: email,
-    from: 'support@setlists.pro',
+    from: 'support@salonclients.xyz',
     subject: 'Password reset',
     html: `<html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
         <head>
@@ -159,8 +159,8 @@ export const passwordReset = (email: string, magicLink: string) => {
       </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="bc33178f-f3eb-4f97-9568-f3326b5ef0d8" data-mc-module-version="2019-10-22">
         <tbody>
           <tr>
-            <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><strong>We received a request to reset your Setlists password.</strong></div>
-    <div style="font-family: inherit; text-align: left">Keeping your account secure is important to us. The link below will expire in 10 minutes. You may request a new link at anytime <a href="https://setlists.pro/forgotPassword">here</a>.</div><div></div></div></td>
+            <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><strong>We received a request to reset your Salon Clients password.</strong></div>
+    <div style="font-family: inherit; text-align: left">Keeping your account secure is important to us. The link below will expire in 10 minutes. You may request a new link at anytime <a href="https://salonclients.xyz/forgotPassword">here</a>.</div><div></div></div></td>
           </tr>
         </tbody>
       </table><table border="0" cellpadding="0" cellspacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed;" width="100%" data-muid="d93731f4-1833-41eb-a52a-3c8dbb21c05c">
@@ -188,7 +188,7 @@ export const passwordReset = (email: string, magicLink: string) => {
       </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="d8ddf862-c5e9-47d4-8930-ada8f73ebf47" data-mc-module-version="2019-10-22">
         <tbody>
           <tr>
-            <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: inherit">Email us at <a href="mailto:support@setlists.pro?subject=&amp;body=">support@setlists.pro</a></div><div></div></div></td>
+            <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: inherit">Email us at <a href="mailto:support@salonclients.xyz?subject=&amp;body=">support@salonclients.xyz</a></div><div></div></div></td>
           </tr>
         </tbody>
       </table></td>

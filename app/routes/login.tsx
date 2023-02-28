@@ -6,7 +6,7 @@ import * as React from "react";
 import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
-import { Button, FlexList, Input, Label } from "~/components";
+import { Button, FlexList } from "~/components";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
@@ -157,18 +157,27 @@ export default function LoginPage() {
                 Remember me
               </label>
             </div>
-            <div className="text-center text-sm">
-              Don't have an account?{" "}
-              <Link
-                className="link link-accent"
-                to={{
-                  pathname: "/join",
-                  search: searchParams.toString(),
-                }}
-              >
-                Sign up
-              </Link>
-            </div>
+            <Link
+              className="text-sm link link-accent"
+              to={{
+                pathname: "/forgotPassword",
+                search: searchParams.toString(),
+              }}
+            >
+              Forgot password
+            </Link>
+          </div>
+          <div className="text-center text-sm">
+            Don't have an account?{" "}
+            <Link
+              className="link link-primary"
+              to={{
+                pathname: "/join",
+                search: searchParams.toString(),
+              }}
+            >
+              Sign up
+            </Link>
           </div>
         </Form>
       </div>

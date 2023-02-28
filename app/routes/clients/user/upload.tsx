@@ -57,7 +57,7 @@ export default function UploadClients() {
       <Navbar>
         <FlexHeader>
           <Title>Bulk upload</Title>
-          <Link kind="ghost" isRounded to="details"><FontAwesomeIcon icon={faTimes} /></Link>
+          <Link kind="ghost" isRounded to=".."><FontAwesomeIcon icon={faTimes} /></Link>
         </FlexHeader>
       </Navbar>
       <FlexList pad={4}>
@@ -70,7 +70,7 @@ export default function UploadClients() {
         <FlexList>
           <input className="file-input file-input-bordered w-full" accept="application/json" name="file" type="file" onChange={handleChange} />
           <Button isDisabled={!files} type="submit" kind="primary" icon={faUpload} onClick={handleSubmit}>Upload</Button>
-        </FlexList>\
+        </FlexList>
       </FlexList>
     </div>
   )

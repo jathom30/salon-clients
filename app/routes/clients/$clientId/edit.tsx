@@ -47,6 +47,7 @@ export default function EditName() {
               name="name"
               placeholder={client.name}
               defaultValue={client.name}
+              autoFocus
             />
             {actionData?.errors.name ? <ErrorMessage message={actionData.errors.name} /> : null}
           </Field>

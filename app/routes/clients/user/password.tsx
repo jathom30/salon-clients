@@ -56,7 +56,7 @@ export default function PasswordReset() {
       <Form method="put">
         <FlexList pad={4}>
           <Field name="password" label="Password">
-            <Input name="password" type="password" placeholder="Update password" onChange={e => setPassword(e.target.value)} />
+            <Input autoFocus name="password" type="password" placeholder="Update password" onChange={e => setPassword(e.target.value)} />
             {actionData?.errors.password ? <ErrorMessage message={actionData?.errors.password} /> : null}
           </Field>
           <PasswordStrength tests={tests} strength={strength} />

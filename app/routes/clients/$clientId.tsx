@@ -4,7 +4,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Outlet, useLoaderData, useLocation, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { CatchContainer, ErrorContainer, FlexHeader, FlexList, ItemBox, Label, Link, Modal, Title } from "~/components";
+import { CatchContainer, ErrorContainer, FlexHeader, FlexList, ItemBox, Label, Link, MobileModal, Title } from "~/components";
 import { getClient } from "~/models/client.server";
 import { getNotes } from "~/models/note.sever";
 import { requireUserId } from "~/session.server";
@@ -76,9 +76,9 @@ export default function Client() {
           </FlexList>
         </ItemBox>
       ))}
-      <Modal open={['note', 'delete', 'details', 'edit'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
+      <MobileModal open={['note', 'delete', 'details', 'edit'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
         <Outlet />
-      </Modal>
+      </MobileModal>
     </FlexList>
   )
 }

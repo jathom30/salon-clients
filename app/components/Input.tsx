@@ -9,11 +9,12 @@ type InputProps = {
   inputRef?: LegacyRef<HTMLInputElement>
   isDisabled?: boolean
   value?: string
+  autoFocus?: boolean
 }
 
 export const inputStyles = "w-full p-2 text-base rounded border-1 border-text-subdued relative bg-component-background text-text"
 
-export const Input = ({ name, type = 'text', value, placeholder, defaultValue, onChange, inputRef, isDisabled = false }: InputProps) => {
+export const Input = ({ autoFocus = false, name, type = 'text', value, placeholder, defaultValue, onChange, inputRef, isDisabled = false }: InputProps) => {
   return (
     <input
       type={type}
@@ -24,6 +25,7 @@ export const Input = ({ name, type = 'text', value, placeholder, defaultValue, o
       defaultValue={defaultValue}
       disabled={isDisabled}
       onChange={onChange}
+      autoFocus={autoFocus}
       ref={inputRef}
     />
   )

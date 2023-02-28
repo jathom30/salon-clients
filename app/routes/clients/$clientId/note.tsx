@@ -35,7 +35,7 @@ export default function NewNote() {
         </FlexHeader>
       </Navbar>
       <FlexList pad={4}>
-        <textarea rows={6} className="textarea textarea-bordered" name="note" />
+        <textarea rows={6} className="textarea textarea-bordered" name="note" autoFocus />
         {actionData?.error.note ? <ErrorMessage message={actionData.error.note} /> : null}
       </FlexList>
       <SaveButtons saveLabel="Save note" />

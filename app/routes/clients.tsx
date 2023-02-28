@@ -4,7 +4,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useState } from "react";
 import { Chair } from "~/assets";
-import { Button, FlexHeader, FlexList, Link, MaxWidth, Modal, Navbar, Title } from "~/components";
+import { Button, FlexHeader, FlexList, Link, MaxWidth, MobileModal, Navbar, Title } from "~/components";
 import { requireUser } from "~/session.server";
 
 export async function loader({ request }: LoaderArgs) {
@@ -39,7 +39,7 @@ export default function Clients() {
       <MaxWidth>
         <Outlet />
       </MaxWidth>
-      <Modal open={showMenu} onClose={() => setShowMenu(false)}>
+      <MobileModal open={showMenu} onClose={() => setShowMenu(false)}>
         <FlexList pad={4}>
           <Link to="user" icon={faCog} onClick={() => setShowMenu(false)} isOutline size="md">User settings</Link>
           <Form method="post" action="/logout">
@@ -48,7 +48,7 @@ export default function Clients() {
             </FlexList>
           </Form>
         </FlexList>
-      </Modal>
+      </MobileModal>
     </main>
   )
 }

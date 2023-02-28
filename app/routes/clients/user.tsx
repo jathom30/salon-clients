@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Outlet, useLoaderData, useLocation, useNavigate } from "@remix-run/react";
-import { Button, Divider, FlexHeader, FlexList, ItemBox, Label, Link, Modal } from "~/components";
+import { Button, Divider, FlexHeader, FlexList, ItemBox, Label, Link, MobileModal } from "~/components";
 import { getClientsAndNotes } from "~/models/client.server";
 import { requireUser } from "~/session.server";
 
@@ -108,9 +108,9 @@ export default function User() {
           </FlexList>
         </ItemBox>
       </FlexList>
-      <Modal open={['delete', 'password', 'edit', 'upload'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
+      <MobileModal open={['delete', 'password', 'edit', 'upload'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>
         <Outlet />
-      </Modal>
+      </MobileModal>
     </FlexList>
   )
 }

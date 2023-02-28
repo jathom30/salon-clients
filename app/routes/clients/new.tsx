@@ -61,7 +61,7 @@ export default function NewClient() {
     <Form method="post">
       <FlexList pad={4}>
         <Field name="name" label="Client name" isRequired>
-          <Input name="name" />
+          <Input name="name" autoFocus />
           {actionData?.errors.name ? <ErrorMessage message={actionData.errors.name} /> : null}
         </Field>
         <Field name="phoneNumber" label="Phone number">

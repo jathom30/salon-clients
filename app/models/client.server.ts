@@ -67,10 +67,10 @@ export async function bulkUpload(clients: ExpectedFileType, userId: Client['user
       data: {
         name: client.name,
         email: client.email,
-        phoneNumber: client.phone_number,
+        phoneNumber: client.phoneNumber,
         userId,
         note: {
-          create: client.notes.map(note => ({ body: note.detail, createdAt: new Date(note.date) }))
+          create: client.notes.map(note => ({ body: note.body, createdAt: new Date(note.createdAt) }))
         }
       }
     })

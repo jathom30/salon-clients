@@ -3,14 +3,17 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
-import { createUserSession, getUserId } from "~/session.server";
-import { verifyLogin } from "~/models/user.server";
+import { createUserSession, getUser } from "~/session.server";
+import { generateTokenLink, verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { Button, FlexList } from "~/components";
+import { getDomainUrl } from "~/utils/password";
+import { verifyAccount } from "~/email/verify";
 
 export async function loader({ request }: LoaderArgs) {
-  const userId = await getUserId(request);
-  if (userId) return redirect("/");
+  const user = await getUser(request);
+
+  if (user?.verified) return redirect("/clients");
   return json({});
 }
 
@@ -49,6 +52,13 @@ export async function action({ request }: ActionArgs) {
       { errors: { email: "Invalid email or password", password: null } },
       { status: 400 }
     );
+  }
+
+  if (!user.verified) {
+    const domainUrl = getDomainUrl(request)
+    const magicLink = await generateTokenLink(email, 'join/verify', domainUrl);
+    verifyAccount(email, magicLink)
+    return redirect('/join/verificationSent')
   }
 
   return createUserSession({

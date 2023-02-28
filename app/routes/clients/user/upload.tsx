@@ -1,7 +1,7 @@
 import { faTimes, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSubmit } from "@remix-run/react";
-import { Button, FlexHeader, FlexList, Link, Navbar, Title } from "~/components";
+import { Button, CatchContainer, ErrorContainer, FlexHeader, FlexList, Link, Navbar, Title } from "~/components";
 import { requireUserId } from "~/session.server";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
@@ -12,10 +12,10 @@ import { bulkUpload } from "~/models/client.server";
 export type ExpectedFileType = {
   name: string;
   email?: string;
-  phone_number?: string;
+  phoneNumber?: string;
   notes: {
-    date: string;
-    detail: string;
+    createdAt: string;
+    body: string;
   }[]
 }[]
 
@@ -74,4 +74,12 @@ export default function UploadClients() {
       </FlexList>
     </div>
   )
+}
+
+export function CatchBoundary() {
+  return <CatchContainer />
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return <ErrorContainer error={error} />
 }

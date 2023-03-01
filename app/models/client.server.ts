@@ -19,7 +19,7 @@ export function getClients({ userId, q }: { userId: User['id']; q?: string }) {
         }
       })
     },
-    select: { id: true, name: true, updateAt: true },
+    select: { id: true, name: true },
     orderBy: { name: 'asc' }
   })
 }

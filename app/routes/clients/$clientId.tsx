@@ -2,7 +2,7 @@ import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Outlet, useLoaderData, useLocation, useNavigate } from "@remix-run/react";
+import { Outlet, useLoaderData, useLocation, useNavigate, Link as RemixLink } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { CatchContainer, ErrorContainer, FlexHeader, FlexList, ItemBox, Label, Link, MobileModal, Title } from "~/components";
 import { getClient } from "~/models/client.server";
@@ -69,11 +69,13 @@ export default function Client() {
               ) : null}
             </FlexList>
           </FlexHeader>
-          <FlexList gap={2}>
-            {note.body.split('\n').map((section, i) => (
-              <p key={i}>{section}</p>
-            ))}
-          </FlexList>
+          <RemixLink to={`note/${note.id}`} className="rounded outline-secondary outline-offset-4 hover:outline">
+            <FlexList gap={2}>
+              {note.body.split('\n').map((section, i) => (
+                <p key={i}>{section}</p>
+              ))}
+            </FlexList>
+          </RemixLink>
         </ItemBox>
       ))}
       <MobileModal open={['note', 'delete', 'details', 'edit'].some(path => pathname.includes(path))} onClose={() => navigate('.')}>

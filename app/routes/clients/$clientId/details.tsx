@@ -65,7 +65,7 @@ export default function EditDetails() {
       <Navbar>
         <FlexHeader>
           <Title>Edit details</Title>
-          <Link kind="ghost" isRounded to="details"><FontAwesomeIcon icon={faTimes} /></Link>
+          <Link kind="ghost" isRounded to=".."><FontAwesomeIcon icon={faTimes} /></Link>
         </FlexHeader>
       </Navbar>
       <Form method="put">

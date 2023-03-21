@@ -23,6 +23,7 @@ export async function action({ request }: ActionArgs) {
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/clients");
   const remember = formData.get("remember");
+  console.log(remember)
 
   if (!validateEmail(email)) {
     return json(

@@ -57,7 +57,7 @@ export default function EditUser() {
     <div>
       <Navbar>
         <FlexHeader>
-          <Title>Reset password</Title>
+          <Title>User details</Title>
           <Link kind="ghost" isRounded to=".."><FontAwesomeIcon icon={faTimes} /></Link>
         </FlexHeader>
       </Navbar>

@@ -18,7 +18,7 @@ import {
   passwordStrength,
 } from "~/utils/password";
 import invariant from "tiny-invariant";
-import { verifyAccount } from "~/email/verify";
+import { verifyAccount } from "~/email/verify.server";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);

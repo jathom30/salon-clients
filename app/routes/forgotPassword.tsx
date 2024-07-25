@@ -19,7 +19,7 @@ import {
 import { validateEmail } from "~/utils";
 import invariant from "tiny-invariant";
 import { generateTokenLink, getUserByEmail } from "~/models/user.server";
-import { passwordReset } from "~/email/password";
+import { passwordReset } from "~/email/password.server";
 import { getDomainUrl } from "~/utils/assorted";
 
 export async function action({ request }: ActionArgs) {

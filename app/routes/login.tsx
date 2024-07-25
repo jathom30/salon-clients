@@ -8,7 +8,7 @@ import { generateTokenLink, verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { Button, FlexList } from "~/components";
 import { getDomainUrl } from "~/utils/password";
-import { verifyAccount } from "~/email/verify";
+import { verifyAccount } from "~/email/verify.server";
 
 export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
@@ -23,7 +23,7 @@ export async function action({ request }: ActionArgs) {
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/clients");
   const remember = formData.get("remember");
-  console.log(remember)
+  console.log(remember);
 
   if (!validateEmail(email)) {
     return json(
@@ -56,10 +56,10 @@ export async function action({ request }: ActionArgs) {
   }
 
   if (!user.verified) {
-    const domainUrl = getDomainUrl(request)
-    const magicLink = await generateTokenLink(email, 'join/verify', domainUrl);
-    verifyAccount(email, magicLink)
-    return redirect('/join/verificationSent')
+    const domainUrl = getDomainUrl(request);
+    const magicLink = await generateTokenLink(email, "join/verify", domainUrl);
+    verifyAccount(email, magicLink);
+    return redirect("/join/verificationSent");
   }
 
   return createUserSession({
@@ -96,10 +96,7 @@ export default function LoginPage() {
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium"
-            >
+            <label htmlFor="email" className="block text-sm font-medium">
               Email address
             </label>
             <div className="mt-1">
@@ -113,7 +110,7 @@ export default function LoginPage() {
                 autoComplete="email"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full input input-bordered"
+                className="input input-bordered w-full"
               />
               {actionData?.errors?.email && (
                 <div className="pt-1 text-error" id="email-error">
@@ -124,10 +121,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium"
-            >
+            <label htmlFor="password" className="block text-sm font-medium">
               Password
             </label>
             <div className="mt-1">
@@ -139,7 +133,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full input input-bordered"
+                className="input input-bordered w-full"
               />
               {actionData?.errors?.password && (
                 <div className="pt-1 text-error" id="password-error">
@@ -151,7 +145,9 @@ export default function LoginPage() {
 
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <FlexList>
-            <Button type="submit" size="md" kind="primary">Login</Button>
+            <Button type="submit" size="md" kind="primary">
+              Login
+            </Button>
           </FlexList>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -161,15 +157,12 @@ export default function LoginPage() {
                 type="checkbox"
                 className="checkbox"
               />
-              <label
-                htmlFor="remember"
-                className="ml-2 block text-sm"
-              >
+              <label htmlFor="remember" className="ml-2 block text-sm">
                 Remember me
               </label>
             </div>
             <Link
-              className="text-sm link link-accent"
+              className="link link-accent text-sm"
               to={{
                 pathname: "/forgotPassword",
                 search: searchParams.toString(),

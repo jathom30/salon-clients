@@ -117,6 +117,7 @@ jobs:
         env:
           PORT: "8811"
           MAGIC_LINK_SECRET: "_my_super_secret_"
+          RESEND_API_KEY: "_my_api_key_"
 
   build:
     name: 🐳 Build

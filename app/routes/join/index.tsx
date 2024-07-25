@@ -18,7 +18,7 @@ import {
   passwordStrength,
 } from "~/utils/password";
 import invariant from "tiny-invariant";
-import { verifyAccount } from "~/email/verify";
+import { verifyAccount } from "~/email/verify.server";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
@@ -33,7 +33,7 @@ export async function action({ request }: ActionArgs) {
   const name = formData.get("name");
   const honeyPot = formData.get("usercode");
   // const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
-  invariant(process.env.SENDGRID_API_KEY, "sendgrid api key must be set");
+  invariant(process.env.RESEND_API_KEY, "resend api key must be set");
 
   if (honeyPot) {
     return redirect("/");

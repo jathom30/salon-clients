@@ -14,7 +14,7 @@ import {
 } from "~/components";
 import { validateEmail } from "~/utils";
 import { generateTokenLink, getUserByEmail } from "~/models/user.server";
-import { verifyAccount } from "~/email/verify";
+import { verifyAccount } from "~/email/verify.server";
 import { getDomainUrl } from "~/utils/assorted";
 import { getUser } from "~/session.server";
 

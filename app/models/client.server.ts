@@ -27,15 +27,6 @@ export function getClients({ userId, q }: { userId: User["id"]; q?: string }) {
   });
 }
 
-export function getAllClients() {
-  return prisma.client.findMany({
-    include: {
-      user: true,
-    },
-    orderBy: { name: "asc" },
-  });
-}
-
 export async function getClientsAndNotes(userId: User["id"]) {
   return prisma.client.findMany({
     where: { userId },

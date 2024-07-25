@@ -1,14 +1,12 @@
-import sgMail from '@sendgrid/mail'
-import invariant from 'tiny-invariant'
+import { Resend } from "resend";
+import invariant from "tiny-invariant";
 
-export const verifyAccount = (email: string, magicLink: string) => {
-  invariant(process.env.SENDGRID_API_KEY, 'sendgrid api key must be set')
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const msg = {
-    to: email,
-    from: 'support@salonclients.xyz',
-    subject: 'Verify your email',
-    html: `<html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
+export const verifyAccount = async (email: string, magicLink: string) => {
+  invariant(process.env.RESEND_API_KEY, "resend api key must be set");
+
+  const html = `<html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
@@ -207,17 +205,18 @@ export const verifyAccount = (email: string, magicLink: string) => {
         </div>
       </center>
     </body>
-  </html>`
+  </html>`;
+
+  const { data, error } = await resend.emails.send({
+    from: "Support <support@salonclients.xyz>",
+    to: [email],
+    subject: "Verify your email",
+    html,
+  });
+
+  if (error) {
+    return console.error({ error });
   }
 
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-  sgMail
-    .send(msg)
-    .then((response) => {
-      console.log(response[0].statusCode)
-      console.log(response[0].headers)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-}
+  console.log({ data });
+};

@@ -24,18 +24,15 @@ export default function Admin() {
     <>
       <FlexList pad={4} gap={2}>
         <h1 className="text-2xl">Admin</h1>
-        <ItemBox>
-          <h2 className="text-xl">Users</h2>
-          <FlexList gap={2}>
-            {users.map((user) => (
-              <ItemBox key={user.id}>
-                <p>
-                  {user.name} - {user.email} - {user.client.length} clients
-                </p>
-              </ItemBox>
-            ))}
-          </FlexList>
-        </ItemBox>
+        <FlexList gap={2}>
+          {users.map((user) => (
+            <ItemBox key={user.id}>
+              <p>
+                {user.name} - {user.email} - {user.client.length} clients
+              </p>
+            </ItemBox>
+          ))}
+        </FlexList>
       </FlexList>
     </>
   );

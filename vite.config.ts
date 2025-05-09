@@ -1,4 +1,6 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import type { UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -38,4 +40,9 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
+    },
+  },
 } as VitestConfigExport);

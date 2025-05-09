@@ -4,9 +4,11 @@ import {
   faKey,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import type { ActionArgs } from "@remix-run/server-runtime";
+import { Form, useActionData } from "@remix-run/react";
+import type { ActionFunctionArgs } from "@remix-run/server-runtime";
+import invariant from "tiny-invariant";
+
 import {
   Button,
   ErrorMessage,
@@ -16,13 +18,12 @@ import {
   ItemBox,
   Link,
 } from "~/components";
-import { validateEmail } from "~/utils";
-import invariant from "tiny-invariant";
-import { generateTokenLink, getUserByEmail } from "~/models/user.server";
 import { passwordReset } from "~/email/password.server";
+import { generateTokenLink, getUserByEmail } from "~/models/user.server";
+import { validateEmail } from "~/utils";
 import { getDomainUrl } from "~/utils/assorted";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   invariant(process.env.RESEND_API_KEY, "resend api key must be set");
@@ -30,7 +31,7 @@ export async function action({ request }: ActionArgs) {
   if (!validateEmail(email)) {
     return json(
       { errors: { email: "Email is invalid" }, email: null },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

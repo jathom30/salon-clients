@@ -5,6 +5,8 @@ import {
   faUser,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Outlet,
   Link as RemixLink,
@@ -12,9 +14,9 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { useState } from "react";
+import { useSpinDelay } from "spin-delay";
+
 import { Chair } from "~/assets";
 import {
   Button,
@@ -28,9 +30,8 @@ import {
   Title,
 } from "~/components";
 import { requireUser } from "~/session.server";
-import { useSpinDelay } from "spin-delay";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
   return json({ user });
 }

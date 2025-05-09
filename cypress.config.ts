@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   env: {
-    MAGIC_LINK_SECRET: '_my_super_secret_'
+    MAGIC_LINK_SECRET: "_my_super_secret_",
   },
   e2e: {
     setupNodeEvents: (on, config) => {
@@ -10,7 +10,6 @@ export default defineConfig({
       const port = process.env.PORT ?? (isDev ? "3000" : "8811");
       const configOverrides: Partial<Cypress.PluginConfigOptions> = {
         baseUrl: `http://localhost:${port}`,
-        video: !process.env.CI,
         screenshotOnRunFailure: !process.env.CI,
       };
 

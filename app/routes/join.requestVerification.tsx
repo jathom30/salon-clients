@@ -1,8 +1,12 @@
 import { faChevronLeft, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
-import type { ActionArgs, LoaderArgs } from "@remix-run/server-runtime";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from "@remix-run/server-runtime";
+
 import {
   Button,
   ErrorMessage,
@@ -12,13 +16,13 @@ import {
   ItemBox,
   Link,
 } from "~/components";
-import { validateEmail } from "~/utils";
-import { generateTokenLink, getUserByEmail } from "~/models/user.server";
 import { verifyAccount } from "~/email/verify.server";
-import { getDomainUrl } from "~/utils/assorted";
+import { generateTokenLink, getUserByEmail } from "~/models/user.server";
 import { getUser } from "~/session.server";
+import { validateEmail } from "~/utils";
+import { getDomainUrl } from "~/utils/assorted";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const urlSearchParams = new URL(request.url).searchParams;
   const email = urlSearchParams.get("email");
   const user = await getUser(request);
@@ -26,7 +30,7 @@ export async function loader({ request }: LoaderArgs) {
   return json({ email, user });
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const honeyPot = formData.get("usercode");
@@ -87,6 +91,7 @@ export default function RequestVerification() {
                 <ErrorMessage message={actionData?.errors.email} />
               ) : null}
             </Field>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
               className="absolute left-0 top-0 -z-10 h-0 w-0 opacity-0"
               htmlFor="usercode"

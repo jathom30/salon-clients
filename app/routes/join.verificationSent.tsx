@@ -1,19 +1,20 @@
 import { faEnvelopeOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, Link } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/server-runtime";
 import { redirect } from "@remix-run/node";
+import { Form, Link } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "@remix-run/server-runtime";
+
 import { FlexList, ItemBox } from "~/components";
 import { getUser } from "~/session.server";
 
-export async function loader({ request }: LoaderArgs) {
-  const user = await getUser(request)
+export async function loader({ request }: LoaderFunctionArgs) {
+  const user = await getUser(request);
   if (user?.verified) {
     // if user and is verified redirect to login
     // once on login, they are redirected to home
-    return redirect('/login')
+    return redirect("/login");
   }
-  return null
+  return null;
 }
 
 export default function VerificationSent() {
@@ -24,12 +25,21 @@ export default function VerificationSent() {
       <ItemBox>
         <FlexList>
           <p>We've sent you an email with a verification link.</p>
-          <p>Please click the link in that email to verify your account and start using <strong>salonclients.xyz</strong></p>
+          <p>
+            Please click the link in that email to verify your account and start
+            using <strong>salonclients.xyz</strong>
+          </p>
         </FlexList>
       </ItemBox>
       <Form method="put">
-        <span>Need a fresh link? <Link to="/join/requestVerification" className='link link-primary'>click here</Link>.</span>
+        <span>
+          Need a fresh link?{" "}
+          <Link to="/join/requestVerification" className="link link-primary">
+            click here
+          </Link>
+          .
+        </span>
       </Form>
     </FlexList>
-  )
+  );
 }

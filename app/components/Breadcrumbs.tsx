@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react"
 import type { ReactNode } from "react";
 
-type Breadcrumb = {
+interface Breadcrumb {
   label: ReactNode;
   to: string;
 }

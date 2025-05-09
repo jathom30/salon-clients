@@ -1,19 +1,20 @@
+import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { LoaderFunctionArgs, SerializeFrom } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   useLoaderData,
   Link as RemixLink,
   useNavigation,
 } from "@remix-run/react";
-import type { LoaderArgs, SerializeFrom } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { useState } from "react";
-import { requireUserId } from "~/session.server";
-import { getClients } from "~/models/client.server";
-import { Button, FlexList, Link, Loader, SearchInput } from "~/components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useSpinDelay } from "spin-delay";
 
-export async function loader({ request }: LoaderArgs) {
+import { Button, FlexList, Link, Loader, SearchInput } from "~/components";
+import { getClients } from "~/models/client.server";
+import { requireUserId } from "~/session.server";
+
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const clients = await getClients({ userId });
   return json({ clients });
@@ -28,7 +29,7 @@ export default function ClientsList() {
   };
 
   const filteredClients = clients.filter((client) =>
-    client.name.toLowerCase().includes(query.toLowerCase())
+    client.name.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
@@ -82,7 +83,7 @@ const ClientLink = ({
   const navigation = useNavigation();
   const pathname = navigation.location?.pathname || "";
   const isLoading = useSpinDelay(
-    navigation.state !== "idle" && pathname.includes(client.id)
+    navigation.state !== "idle" && pathname.includes(client.id),
   );
   return (
     <RemixLink

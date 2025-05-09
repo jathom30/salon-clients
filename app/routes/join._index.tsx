@@ -1,32 +1,35 @@
-import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
+import invariant from "tiny-invariant";
 
-import { getUserId } from "~/session.server";
-
+import { Button, FlexList, PasswordStrength } from "~/components";
+import { verifyAccount } from "~/email/verify.server";
 import {
   createUser,
   generateTokenLink,
   getUserByEmail,
 } from "~/models/user.server";
+import { getUserId } from "~/session.server";
 import { validateEmail } from "~/utils";
-import { Button, FlexList, PasswordStrength } from "~/components";
 import {
   getDomainUrl,
   getPasswordError,
   passwordStrength,
 } from "~/utils/password";
-import invariant from "tiny-invariant";
-import { verifyAccount } from "~/email/verify.server";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
@@ -42,21 +45,21 @@ export async function action({ request }: ActionArgs) {
   if (!validateEmail(email)) {
     return json(
       { errors: { email: "Email is invalid", password: null, name: null } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json(
       { errors: { email: null, password: "Password is required", name: null } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (typeof name !== "string" || name.length === 0) {
     return json(
       { errors: { email: null, password: null, name: "Name is required" } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -73,7 +76,7 @@ export async function action({ request }: ActionArgs) {
         },
         success: false,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -88,7 +91,7 @@ export async function action({ request }: ActionArgs) {
         },
         success: false,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -101,9 +104,11 @@ export async function action({ request }: ActionArgs) {
   return redirect("verificationSent");
 }
 export const meta: MetaFunction = () => {
-  return {
-    title: "Sign Up",
-  };
+  return [
+    {
+      title: "Sign Up",
+    },
+  ];
 };
 
 export default function Join() {
@@ -138,21 +143,19 @@ export default function Join() {
                 ref={nameRef}
                 id="name"
                 required
-                autoFocus={true}
                 name="name"
                 type="string"
                 aria-invalid={actionData?.errors?.name ? true : undefined}
                 aria-describedby="name-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.name && (
+              {actionData?.errors?.name ? (
                 <div className="pt-1 text-error" id="name-error">
                   {actionData.errors.name}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
-
           <div>
             <label htmlFor="email" className="block text-sm font-medium">
               Email address
@@ -169,14 +172,13 @@ export default function Join() {
                 aria-describedby="email-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.email && (
+              {actionData?.errors?.email ? (
                 <div className="pt-1 text-error" id="email-error">
                   {actionData.errors.email}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
-
           <div>
             <label htmlFor="password" className="block text-sm font-medium">
               Password
@@ -196,14 +198,14 @@ export default function Join() {
               <div className="pt-2">
                 <PasswordStrength tests={tests} strength={strength} />
               </div>
-              {actionData?.errors?.password && (
+              {actionData?.errors?.password ? (
                 <div className="pt-1 text-error" id="password-error">
                   {actionData.errors.password}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
-
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label
             className="absolute left-0 top-0 -z-10 h-0 w-0 opacity-0"
             htmlFor="usercode"
@@ -221,7 +223,6 @@ export default function Join() {
               tabIndex={-1}
             />
           </label>
-
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <FlexList>
             <Button type="submit" kind="primary" size="md">

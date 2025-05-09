@@ -1,10 +1,6 @@
 import { config } from "@fortawesome/fontawesome-svg-core";
 import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css?url";
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,

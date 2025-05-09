@@ -1,8 +1,15 @@
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useNavigation } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import {
+  Form,
+  isRouteErrorResponse,
+  useNavigation,
+  useRouteError,
+} from "@remix-run/react";
+import invariant from "tiny-invariant";
+
 import {
   Button,
   CatchContainer,
@@ -13,9 +20,8 @@ import {
   Navbar,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
 import { deleteNote } from "~/models/note.sever";
+import { requireUserId } from "~/session.server";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   await requireUserId(request);
@@ -63,10 +69,10 @@ export default function NewNote() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

@@ -1,7 +1,7 @@
 import type { User, Client } from "@prisma/client";
 
 import { prisma } from "~/db.server";
-import type { ExpectedFileType } from "~/routes/clients/user/upload";
+import type { ExpectedFileType } from "~/routes/clients.user.upload";
 
 export function getClient({
   id,
@@ -81,7 +81,7 @@ export function updateClient(id: Client["id"], client: Partial<Client>) {
 
 export async function bulkUpload(
   clients: ExpectedFileType,
-  userId: Client["userId"]
+  userId: Client["userId"],
 ) {
   return await Promise.all(
     clients.map(async (client) => {
@@ -99,6 +99,6 @@ export async function bulkUpload(
           },
         },
       });
-    })
+    }),
   );
 }

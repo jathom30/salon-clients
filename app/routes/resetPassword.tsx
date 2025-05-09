@@ -4,6 +4,7 @@ import {
   faKey,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { json, redirect } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -15,7 +16,10 @@ import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
 } from "@remix-run/server-runtime";
-import { json, redirect } from "@remix-run/node";
+import { useState } from "react";
+import { useSpinDelay } from "spin-delay";
+import invariant from "tiny-invariant";
+
 import {
   Button,
   ErrorMessage,
@@ -26,18 +30,15 @@ import {
   Link,
   PasswordStrength,
 } from "~/components";
+import { deleteToken } from "~/models/token.server";
 import {
   compareToken,
   getUserById,
   updateUser,
   updateUserPassword,
 } from "~/models/user.server";
-import invariant from "tiny-invariant";
-import { deleteToken } from "~/models/token.server";
-import { useState } from "react";
-import { getPasswordError, passwordStrength } from "~/utils/password";
 import { decrypt } from "~/utils/encryption.server";
-import { useSpinDelay } from "spin-delay";
+import { getPasswordError, passwordStrength } from "~/utils/password";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -161,7 +162,7 @@ export default function ResetPassword() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
+export function ErrorBoundary() {
   return (
     <div className="m-auto mt-8 max-w-lg">
       <FlexList pad={4}>

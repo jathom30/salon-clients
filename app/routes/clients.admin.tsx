@@ -1,9 +1,10 @@
-import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+
 import { FlexList, ItemBox } from "~/components";
-import { requireUser } from "~/session.server";
 import { getUsers } from "~/models/admin.server";
+import { requireUser } from "~/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);

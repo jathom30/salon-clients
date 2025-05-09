@@ -7,12 +7,12 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
 
-import { createUserSession, getUser } from "~/session.server";
-import { generateTokenLink, verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
 import { Button, FlexList } from "~/components";
-import { getDomainUrl } from "~/utils/password";
 import { verifyAccount } from "~/email/verify.server";
+import { generateTokenLink, verifyLogin } from "~/models/user.server";
+import { createUserSession, getUser } from "~/session.server";
+import { safeRedirect, validateEmail } from "~/utils";
+import { getDomainUrl } from "~/utils/password";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await getUser(request);
@@ -75,9 +75,11 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const meta: MetaFunction = () => {
-  return {
-    title: "Login",
-  };
+  return [
+    {
+      title: "Login",
+    },
+  ];
 };
 
 export default function LoginPage() {
@@ -108,7 +110,6 @@ export default function LoginPage() {
                 ref={emailRef}
                 id="email"
                 required
-                autoFocus={true}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -116,11 +117,11 @@ export default function LoginPage() {
                 aria-describedby="email-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.email && (
+              {actionData?.errors?.email ? (
                 <div className="pt-1 text-error" id="email-error">
                   {actionData.errors.email}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
@@ -139,11 +140,11 @@ export default function LoginPage() {
                 aria-describedby="password-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.password && (
+              {actionData?.errors?.password ? (
                 <div className="pt-1 text-error" id="password-error">
                   {actionData.errors.password}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 

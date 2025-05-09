@@ -1,8 +1,9 @@
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useNavigation } from "@remix-run/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { Form, useNavigation } from "@remix-run/react";
+
 import {
   Button,
   FlexHeader,
@@ -11,8 +12,8 @@ import {
   Navbar,
   Title,
 } from "~/components";
-import { requireUser, requireUserId } from "~/session.server";
 import { deleteUserByEmail } from "~/models/user.server";
+import { requireUser, requireUserId } from "~/session.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   return await requireUserId(request);

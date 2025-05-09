@@ -1,12 +1,20 @@
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useNavigation } from "@remix-run/react";
+import type { Client } from "@prisma/client";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   SerializeFrom,
 } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import {
+  Form,
+  isRouteErrorResponse,
+  useNavigation,
+  useRouteError,
+} from "@remix-run/react";
+import invariant from "tiny-invariant";
+
 import {
   Button,
   CatchContainer,
@@ -17,11 +25,9 @@ import {
   Navbar,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
 import { deleteClient } from "~/models/client.server";
+import { requireUserId } from "~/session.server";
 import { useMatchesData } from "~/utils";
-import type { Client } from "@prisma/client";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   return await requireUserId(request);
@@ -77,10 +83,10 @@ export default function DeleteClient() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

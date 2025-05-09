@@ -1,6 +1,15 @@
 import { faTimes, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSubmit } from "@remix-run/react";
+import type { ActionFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import {
+  isRouteErrorResponse,
+  useRouteError,
+  useSubmit,
+} from "@remix-run/react";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
+
 import {
   Button,
   CatchContainer,
@@ -11,12 +20,8 @@ import {
   Navbar,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import type { ChangeEvent } from "react";
-import { useState } from "react";
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
 import { bulkUpload } from "~/models/client.server";
+import { requireUserId } from "~/session.server";
 
 export type ExpectedFileType = {
   name: string;
@@ -123,10 +128,10 @@ export default function UploadClients() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

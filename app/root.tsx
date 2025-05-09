@@ -1,4 +1,10 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -8,13 +14,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { useEffect } from "react";
 import { themeChange } from "theme-change";
+
 import stylesheet from "~/globals.css?url";
+
 import { getUser } from "./session.server";
 
-import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
-import { useEffect } from "react";
 // Prevent fontawesome from dynamically adding its css since we are going to include it manually
 config.autoAddCss = false;
 
@@ -31,12 +37,14 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export const meta = () => ({
-  charset: "utf-8",
-  title: "Clients",
-  viewport:
-    "width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover",
-});
+export const meta: MetaFunction = () => [
+  {
+    charset: "utf-8",
+    title: "Clients",
+    viewport:
+      "width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover",
+  },
+];
 
 export async function loader({ request }: LoaderFunctionArgs) {
   return json({

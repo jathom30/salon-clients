@@ -1,6 +1,8 @@
-import { Form, useActionData } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect, json } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { useState } from "react";
+
 import {
   ErrorMessage,
   Field,
@@ -8,13 +10,12 @@ import {
   Input,
   SaveButtons,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import { getFields } from "~/utils/form";
 import { createClient } from "~/models/client.server";
 import { createNote } from "~/models/note.sever";
-import { useState } from "react";
-import { maskingFuncs } from "~/utils/maskingFuncs";
+import { requireUserId } from "~/session.server";
 import { validateEmail } from "~/utils";
+import { getFields } from "~/utils/form";
+import { maskingFuncs } from "~/utils/maskingFuncs";
 
 export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
@@ -77,7 +78,7 @@ export default function NewClient() {
     <Form method="post">
       <FlexList pad={4}>
         <Field name="name" label="Client name" isRequired>
-          <Input name="name" autoFocus />
+          <Input name="name" />
           {actionData?.errors.name ? (
             <ErrorMessage message={actionData.errors.name} />
           ) : null}

@@ -1,12 +1,20 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData } from "@remix-run/react";
+import type { Client } from "@prisma/client";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   SerializeFrom,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import {
+  Form,
+  isRouteErrorResponse,
+  useActionData,
+  useRouteError,
+} from "@remix-run/react";
+import invariant from "tiny-invariant";
+
 import {
   CatchContainer,
   ErrorContainer,
@@ -20,10 +28,8 @@ import {
   SaveButtons,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
 import { updateClient } from "~/models/client.server";
-import type { Client } from "@prisma/client";
+import { requireUserId } from "~/session.server";
 import { useMatchesData } from "~/utils";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -67,7 +73,6 @@ export default function EditName() {
               name="name"
               placeholder={client.name}
               defaultValue={client.name}
-              autoFocus
             />
             {actionData?.errors.name ? (
               <ErrorMessage message={actionData.errors.name} />
@@ -80,10 +85,10 @@ export default function EditName() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

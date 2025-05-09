@@ -1,22 +1,23 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-} from "@remix-run/server-runtime";
-import { redirect } from "@remix-run/node";
-import invariant from "tiny-invariant";
-import { compareToken, getUserById, verifyUser } from "~/models/user.server";
-import { createUserSession } from "~/session.server";
-import { safeRedirect } from "~/utils";
-import { Button, FlexList, ItemBox } from "~/components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { redirect } from "@remix-run/node";
 import { Form, Link, useNavigation } from "@remix-run/react";
-import { deleteToken } from "~/models/token.server";
-import { decrypt } from "~/utils/encryption.server";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from "@remix-run/server-runtime";
 import { useSpinDelay } from "spin-delay";
+import invariant from "tiny-invariant";
+
+import { Button, FlexList, ItemBox } from "~/components";
+import { deleteToken } from "~/models/token.server";
+import { compareToken, getUserById, verifyUser } from "~/models/user.server";
+import { createUserSession } from "~/session.server";
+import { safeRedirect } from "~/utils";
+import { decrypt } from "~/utils/encryption.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);

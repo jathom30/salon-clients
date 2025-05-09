@@ -1,12 +1,21 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData } from "@remix-run/react";
+import type { Client } from "@prisma/client";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   SerializeFrom,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import {
+  Form,
+  isRouteErrorResponse,
+  useActionData,
+  useRouteError,
+} from "@remix-run/react";
+import { useState } from "react";
+import invariant from "tiny-invariant";
+
 import {
   CatchContainer,
   ErrorContainer,
@@ -20,14 +29,11 @@ import {
   SaveButtons,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
-import { getFields } from "~/utils/form";
 import { updateClient } from "~/models/client.server";
-import { useState } from "react";
-import { maskingFuncs } from "~/utils/maskingFuncs";
+import { requireUserId } from "~/session.server";
 import { useMatchesData, validateEmail } from "~/utils";
-import type { Client } from "@prisma/client";
+import { getFields } from "~/utils/form";
+import { maskingFuncs } from "~/utils/maskingFuncs";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   return await requireUserId(request);
@@ -51,7 +57,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return json({ errors });
   }
 
-  if (fields.phoneNumber && (fields.phoneNumber?.length || "") < 12) {
+  if (fields.phoneNumber && (fields.phoneNumber?.length || 0) < 12) {
     return json({
       errors: {
         phoneNumber: "Invalid phone number",
@@ -122,10 +128,10 @@ export default function EditDetails() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

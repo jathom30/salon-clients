@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import Spline from "@splinetool/react-spline";
 import { Suspense } from "react";
+
 import { Chair } from "~/assets";
 import { FlexList, Link } from "~/components";
 import { getUserId } from "~/session.server";

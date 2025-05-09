@@ -1,8 +1,15 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import {
+  Form,
+  isRouteErrorResponse,
+  useActionData,
+  useRouteError,
+} from "@remix-run/react";
+import invariant from "tiny-invariant";
+
 import {
   CatchContainer,
   ErrorContainer,
@@ -14,9 +21,8 @@ import {
   SaveButtons,
   Title,
 } from "~/components";
-import { requireUserId } from "~/session.server";
-import invariant from "tiny-invariant";
 import { createNote } from "~/models/note.sever";
+import { requireUserId } from "~/session.server";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   await requireUserId(request);
@@ -47,12 +53,7 @@ export default function NewNote() {
         </FlexHeader>
       </Navbar>
       <FlexList pad={4}>
-        <textarea
-          rows={6}
-          className="textarea textarea-bordered"
-          name="note"
-          autoFocus
-        />
+        <textarea rows={6} className="textarea textarea-bordered" name="note" />
         {actionData?.error.note ? (
           <ErrorMessage message={actionData.error.note} />
         ) : null}
@@ -62,10 +63,10 @@ export default function NewNote() {
   );
 }
 
-export function CatchBoundary() {
-  return <CatchContainer />;
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return <ErrorContainer error={error} />;
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (!isRouteErrorResponse(error)) {
+    return <ErrorContainer error={error as Error} />;
+  }
+  return <CatchContainer status={error.status} data={error.data} />;
 }

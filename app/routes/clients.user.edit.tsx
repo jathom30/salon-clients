@@ -1,8 +1,9 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useLoaderData } from "@remix-run/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
+
 import {
   Field,
   FlexHeader,
@@ -13,9 +14,9 @@ import {
   SaveButtons,
   Title,
 } from "~/components";
+import { updateUser } from "~/models/user.server";
 import { requireUser } from "~/session.server";
 import { validateEmail } from "~/utils";
-import { updateUser } from "~/models/user.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
@@ -23,7 +24,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({ user });
 }
 
-export async function action({ request, params }: ActionFunctionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const user = await requireUser(request);
 
   const formData = await request.formData();

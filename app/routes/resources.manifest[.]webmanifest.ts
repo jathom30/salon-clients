@@ -1,15 +1,15 @@
 import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
 
-export let loader: LoaderFunction = () => {
+export const loader: LoaderFunction = () => {
   // https://github.com/ShafSpecs/remix-pwa#going-deeper
   return json(
     {
       short_name: "Clients",
       name: "Clients",
       start_url: "/clients",
-      themeColor: '#ffffff',
-      backgroundColor: '#ffffff',
+      themeColor: "#ffffff",
+      backgroundColor: "#ffffff",
       display: "standalone",
       shortcuts: [
         {
@@ -65,7 +65,7 @@ export let loader: LoaderFunction = () => {
         },
         {
           src: "/icons/safari-pinned-tab.svg",
-          color: '#000000',
+          color: "#000000",
           type: "image/svg",
         },
       ],

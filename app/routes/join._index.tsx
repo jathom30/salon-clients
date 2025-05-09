@@ -6,23 +6,22 @@ import type {
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
+import invariant from "tiny-invariant";
 
-import { getUserId } from "~/session.server";
-
+import { Button, FlexList, PasswordStrength } from "~/components";
+import { verifyAccount } from "~/email/verify.server";
 import {
   createUser,
   generateTokenLink,
   getUserByEmail,
 } from "~/models/user.server";
+import { getUserId } from "~/session.server";
 import { validateEmail } from "~/utils";
-import { Button, FlexList, PasswordStrength } from "~/components";
 import {
   getDomainUrl,
   getPasswordError,
   passwordStrength,
 } from "~/utils/password";
-import invariant from "tiny-invariant";
-import { verifyAccount } from "~/email/verify.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await getUserId(request);
@@ -105,9 +104,11 @@ export async function action({ request }: ActionFunctionArgs) {
   return redirect("verificationSent");
 }
 export const meta: MetaFunction = () => {
-  return {
-    title: "Sign Up",
-  };
+  return [
+    {
+      title: "Sign Up",
+    },
+  ];
 };
 
 export default function Join() {
@@ -142,18 +143,17 @@ export default function Join() {
                 ref={nameRef}
                 id="name"
                 required
-                autoFocus={true}
                 name="name"
                 type="string"
                 aria-invalid={actionData?.errors?.name ? true : undefined}
                 aria-describedby="name-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.name && (
+              {actionData?.errors?.name ? (
                 <div className="pt-1 text-error" id="name-error">
                   {actionData.errors.name}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
@@ -173,11 +173,11 @@ export default function Join() {
                 aria-describedby="email-error"
                 className="input input-bordered w-full"
               />
-              {actionData?.errors?.email && (
+              {actionData?.errors?.email ? (
                 <div className="pt-1 text-error" id="email-error">
                   {actionData.errors.email}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
@@ -200,11 +200,11 @@ export default function Join() {
               <div className="pt-2">
                 <PasswordStrength tests={tests} strength={strength} />
               </div>
-              {actionData?.errors?.password && (
+              {actionData?.errors?.password ? (
                 <div className="pt-1 text-error" id="password-error">
                   {actionData.errors.password}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 

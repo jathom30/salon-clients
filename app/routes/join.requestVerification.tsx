@@ -91,6 +91,7 @@ export default function RequestVerification() {
                 <ErrorMessage message={actionData?.errors.email} />
               ) : null}
             </Field>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
               className="absolute left-0 top-0 -z-10 h-0 w-0 opacity-0"
               htmlFor="usercode"

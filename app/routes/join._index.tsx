@@ -156,7 +156,6 @@ export default function Join() {
               ) : null}
             </div>
           </div>
-
           <div>
             <label htmlFor="email" className="block text-sm font-medium">
               Email address
@@ -180,7 +179,6 @@ export default function Join() {
               ) : null}
             </div>
           </div>
-
           <div>
             <label htmlFor="password" className="block text-sm font-medium">
               Password
@@ -207,7 +205,7 @@ export default function Join() {
               ) : null}
             </div>
           </div>
-
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label
             className="absolute left-0 top-0 -z-10 h-0 w-0 opacity-0"
             htmlFor="usercode"
@@ -225,7 +223,6 @@ export default function Join() {
               tabIndex={-1}
             />
           </label>
-
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <FlexList>
             <Button type="submit" kind="primary" size="md">

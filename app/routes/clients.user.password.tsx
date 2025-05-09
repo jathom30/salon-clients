@@ -1,9 +1,10 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, useActionData } from "@remix-run/react";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
 import { useState } from "react";
+
 import {
   ErrorMessage,
   Field,
@@ -16,11 +17,11 @@ import {
   SaveButtons,
   Title,
 } from "~/components";
+import { updateUserPassword } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 import { getPasswordError, passwordStrength } from "~/utils/password";
-import { updateUserPassword } from "~/models/user.server";
 
-export async function action({ request, params }: ActionFunctionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
@@ -70,7 +71,6 @@ export default function PasswordReset() {
         <FlexList pad={4}>
           <Field name="password" label="Password">
             <Input
-              autoFocus
               name="password"
               type="password"
               placeholder="Update password"

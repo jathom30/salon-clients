@@ -1,9 +1,10 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { useNavigation } from "@remix-run/react"
+import { useSpinDelay } from 'spin-delay';
+
 import { Button } from "./Button"
 import { FlexList } from "./FlexList"
 import { Link } from "./Link"
-import { useSpinDelay } from 'spin-delay';
 
 export const ConfirmDelete = ({ label, deleteLabel = 'Delete', message, cancelTo }: { label: string; deleteLabel?: string; message: string; cancelTo: string }) => {
   const navigation = useNavigation()

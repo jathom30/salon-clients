@@ -1,6 +1,6 @@
 import React from "react"
 
-type ItemBoxProps = {
+interface ItemBoxProps {
   children: React.ReactNode
 }
 

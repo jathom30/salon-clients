@@ -1,4 +1,4 @@
-type LabelProps = { required?: boolean; children?: React.ReactNode; isDanger?: boolean; align?: 'left' | 'center' | 'right' }
+interface LabelProps { required?: boolean; children?: React.ReactNode; isDanger?: boolean; align?: 'left' | 'center' | 'right' }
 
 export const Label = ({ required, children, isDanger = false, align = 'left' }: LabelProps) => {
   const getAlign = () => {
@@ -16,12 +16,10 @@ export const Label = ({ required, children, isDanger = false, align = 'left' }: 
   return (
     <span className={`text-sm ${getAlign()} font-bold ${isDanger ? 'text-error' : ''}`}>
       {children}
-      {required && (
-        <>
+      {required ? <>
           {' '}
           <span className="font-normal">[Required]</span>
-        </>
-      )}
+        </> : null}
     </span>
   )
 }

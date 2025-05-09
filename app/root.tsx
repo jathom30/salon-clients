@@ -9,8 +9,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { themeChange } from "theme-change";
-
-import tailwindStylesheetUrl from "./styles/tailwind.css";
+import stylesheet from "~/globals.css?url";
 import { getUser } from "./session.server";
 
 import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css";
@@ -27,7 +26,7 @@ export const links: LinksFunction = () => {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css2?family=Fascinate&family=Poppins:wght@100;400;700&display=swap",
     },
-    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    { rel: "stylesheet", href: stylesheet },
     { rel: "stylesheet", href: faStylesheetUrl },
   ];
 };

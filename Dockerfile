@@ -42,7 +42,6 @@ FROM base
 
 ENV DATABASE_URL=file:/data/sqlite.db
 ENV PORT="8080"
-ENV HOSTNAME="0.0.0.0"
 ENV NODE_ENV="production"
 
 # add shortcut for connecting to database CLI

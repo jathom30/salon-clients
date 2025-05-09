@@ -4,7 +4,7 @@
 #
 
 app = "salon-contacts-remix-ef05"
-primary_region = "iad2"
+primary_region = "ord"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
 

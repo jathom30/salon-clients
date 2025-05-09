@@ -1,5 +1,5 @@
 import { config } from "@fortawesome/fontawesome-svg-core";
-import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css";
+import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css?url";
 import type {
   LinksFunction,
   LoaderFunctionArgs,
@@ -8,7 +8,6 @@ import type {
 import { json } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -68,7 +67,6 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );

@@ -1,19 +1,18 @@
-
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import Spline from '@splinetool/react-spline';
+import Spline from "@splinetool/react-spline";
 import { Suspense } from "react";
 import { Chair } from "~/assets";
 import { FlexList, Link } from "~/components";
 import { getUserId } from "~/session.server";
 
-export async function loader({ request }: LoaderArgs) {
-  const userId = await getUserId(request)
+export async function loader({ request }: LoaderFunctionArgs) {
+  const userId = await getUserId(request);
   // redirect user if logged in
   if (userId) {
-    return redirect("/clients")
+    return redirect("/clients");
   }
-  return null
+  return null;
 }
 
 export default function Index() {
@@ -26,8 +25,12 @@ export default function Index() {
       </div>
       <h1 className="text-5xl font-bold text-primary">Salon Clients</h1>
       <FlexList direction="row">
-        <Link size="md" to="login" isOutline>Login</Link>
-        <Link size="md" to="join" kind="primary">Signup</Link>
+        <Link size="md" to="login" isOutline>
+          Login
+        </Link>
+        <Link size="md" to="join" kind="primary">
+          Signup
+        </Link>
       </FlexList>
     </main>
   );

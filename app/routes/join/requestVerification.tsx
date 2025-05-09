@@ -2,7 +2,7 @@ import { faChevronLeft, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
-import type { ActionArgs, LoaderArgs } from "@remix-run/server-runtime";
+import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/server-runtime";
 import {
   Button,
   ErrorMessage,
@@ -18,7 +18,7 @@ import { verifyAccount } from "~/email/verify.server";
 import { getDomainUrl } from "~/utils/assorted";
 import { getUser } from "~/session.server";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const urlSearchParams = new URL(request.url).searchParams;
   const email = urlSearchParams.get("email");
   const user = await getUser(request);

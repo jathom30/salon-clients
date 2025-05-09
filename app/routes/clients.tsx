@@ -12,7 +12,7 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useState } from "react";
 import { Chair } from "~/assets";
@@ -30,7 +30,7 @@ import {
 import { requireUser } from "~/session.server";
 import { useSpinDelay } from "spin-delay";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
   return json({ user });
 }

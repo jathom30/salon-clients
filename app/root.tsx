@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -8,12 +8,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { themeChange } from 'theme-change'
+import { themeChange } from "theme-change";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
 
-import faStylesheetUrl from '@fortawesome/fontawesome-svg-core/styles.css';
+import faStylesheetUrl from "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { useEffect } from "react";
 // Prevent fontawesome from dynamically adding its css since we are going to include it manually
@@ -21,21 +21,25 @@ config.autoAddCss = false;
 
 export const links: LinksFunction = () => {
   return [
-    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Fascinate&family=Poppins:wght@100;400;700&display=swap' },
+    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    { rel: "preconnect", href: "https://fonts.gstatic.com" },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Fascinate&family=Poppins:wght@100;400;700&display=swap",
+    },
     { rel: "stylesheet", href: tailwindStylesheetUrl },
-    { rel: 'stylesheet', href: faStylesheetUrl },
+    { rel: "stylesheet", href: faStylesheetUrl },
   ];
 };
 
-export const meta: MetaFunction = () => ({
+export const meta = () => ({
   charset: "utf-8",
   title: "Clients",
-  viewport: "width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover",
+  viewport:
+    "width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover",
 });
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   return json({
     user: await getUser(request),
   });
@@ -43,9 +47,9 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function App() {
   useEffect(() => {
-    themeChange(false)
+    themeChange(false);
     // 👆 false parameter is required for react project
-  })
+  });
   return (
     <html lang="en" className="h-full bg-base-300">
       <head>

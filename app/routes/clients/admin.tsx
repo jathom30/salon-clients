@@ -1,11 +1,11 @@
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { FlexList, ItemBox } from "~/components";
 import { requireUser } from "~/session.server";
 import { getUsers } from "~/models/admin.server";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
 
   if (user.email !== "jathom30@gmail.com") {

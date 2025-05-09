@@ -11,7 +11,7 @@ import {
   Link as RemixLink,
   useNavigation,
 } from "@remix-run/react";
-import type { ActionArgs, LoaderArgs } from "@remix-run/server-runtime";
+import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/server-runtime";
 import { json, redirect } from "@remix-run/node";
 import {
   Button,
@@ -36,7 +36,7 @@ import { getPasswordError, passwordStrength } from "~/utils/password";
 import { decrypt } from "~/utils/encryption.server";
 import { useSpinDelay } from "spin-delay";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const urlSearchParams = url.searchParams;
   const token = urlSearchParams.get("token");

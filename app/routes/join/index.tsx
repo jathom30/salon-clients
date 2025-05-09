@@ -1,4 +1,8 @@
-import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type {
+  ActionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
@@ -20,7 +24,7 @@ import {
 import invariant from "tiny-invariant";
 import { verifyAccount } from "~/email/verify.server";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
@@ -42,21 +46,21 @@ export async function action({ request }: ActionArgs) {
   if (!validateEmail(email)) {
     return json(
       { errors: { email: "Email is invalid", password: null, name: null } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json(
       { errors: { email: null, password: "Password is required", name: null } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   if (typeof name !== "string" || name.length === 0) {
     return json(
       { errors: { email: null, password: null, name: "Name is required" } },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -73,7 +77,7 @@ export async function action({ request }: ActionArgs) {
         },
         success: false,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -88,7 +92,7 @@ export async function action({ request }: ActionArgs) {
         },
         success: false,
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

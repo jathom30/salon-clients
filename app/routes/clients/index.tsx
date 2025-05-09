@@ -1,8 +1,5 @@
 import {
-  Form,
   useLoaderData,
-  useSearchParams,
-  useSubmit,
   Link as RemixLink,
   useNavigation,
 } from "@remix-run/react";
@@ -18,43 +15,33 @@ import { useSpinDelay } from "spin-delay";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
-
-  const url = new URL(request.url);
-  const q = url.searchParams.get("query");
-
-  const params = {
-    userId,
-    ...(q ? { q } : null),
-  };
-
-  const clients = await getClients(params);
+  const clients = await getClients({ userId });
   return json({ clients });
 }
 
 export default function ClientsList() {
   const { clients } = useLoaderData<typeof loader>();
-  const submit = useSubmit();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("query"));
+  const [query, setQuery] = useState("");
 
   const handleClearQuery = () => {
     setQuery("");
-    setSearchParams({});
   };
+
+  const filteredClients = clients.filter((client) =>
+    client.name.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <>
       <div className="sticky top-16 bg-base-300 p-4">
-        <Form method="get" onChange={(e) => submit(e.currentTarget)}>
-          <SearchInput
-            value={query}
-            onClear={handleClearQuery}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </Form>
+        <SearchInput
+          value={query}
+          onClear={handleClearQuery}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </div>
       <FlexList pad={4} gap={2}>
-        {clients.length === 0 ? (
+        {filteredClients.length === 0 ? (
           <FlexList items="center">
             <FontAwesomeIcon size="4x" icon={faMagnifyingGlass} />
             {query ? (
@@ -78,7 +65,7 @@ export default function ClientsList() {
             )}
           </FlexList>
         ) : (
-          clients
+          filteredClients
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((client) => <ClientLink client={client} key={client.id} />)
         )}

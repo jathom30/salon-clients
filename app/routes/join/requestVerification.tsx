@@ -2,7 +2,10 @@ import { faChevronLeft, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/node";
-import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/server-runtime";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from "@remix-run/server-runtime";
 import {
   Button,
   ErrorMessage,
@@ -26,7 +29,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({ email, user });
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const honeyPot = formData.get("usercode");

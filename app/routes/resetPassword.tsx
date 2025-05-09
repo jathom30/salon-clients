@@ -11,7 +11,10 @@ import {
   Link as RemixLink,
   useNavigation,
 } from "@remix-run/react";
-import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/server-runtime";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from "@remix-run/server-runtime";
 import { json, redirect } from "@remix-run/node";
 import {
   Button,
@@ -57,7 +60,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({ email: user.email });
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const url = new URL(request.url);
   const urlSearchParams = url.searchParams;
   const id = urlSearchParams.get("id");

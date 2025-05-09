@@ -1,4 +1,7 @@
-import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/server-runtime";
+import type {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+} from "@remix-run/server-runtime";
 import { redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { compareToken, getUserById, verifyUser } from "~/models/user.server";
@@ -39,7 +42,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return null;
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const url = new URL(request.url);
   const urlSearchParams = url.searchParams;
   const token = urlSearchParams.get("token");

@@ -1,7 +1,7 @@
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, useNavigation } from "@remix-run/react";
-import type { ActionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Button,
@@ -18,7 +18,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return await requireUserId(request);
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const user = await requireUser(request);
   await deleteUserByEmail(user.email);
   return redirect("/");

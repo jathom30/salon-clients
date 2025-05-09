@@ -1,5 +1,5 @@
 import { Form, useActionData } from "@remix-run/react";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect, json } from "@remix-run/node";
 import {
   ErrorMessage,
@@ -16,7 +16,7 @@ import { useState } from "react";
 import { maskingFuncs } from "~/utils/maskingFuncs";
 import { validateEmail } from "~/utils";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();

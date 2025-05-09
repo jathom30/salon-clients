@@ -1,5 +1,5 @@
 import type {
-  ActionArgs,
+  ActionFunctionArgs,
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
@@ -21,7 +21,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return json({});
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");

@@ -2,7 +2,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, useActionData } from "@remix-run/react";
 import type {
-  ActionArgs,
+  ActionFunctionArgs,
   LoaderFunctionArgs,
   SerializeFrom,
 } from "@remix-run/node";
@@ -30,7 +30,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return await requireUserId(request);
 }
 
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   await requireUserId(request);
   const { clientId } = params;
   invariant(clientId, "clientId not found");

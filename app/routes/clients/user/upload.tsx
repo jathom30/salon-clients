@@ -14,7 +14,7 @@ import {
 import { requireUserId } from "~/session.server";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { bulkUpload } from "~/models/client.server";
 
@@ -28,7 +28,7 @@ export type ExpectedFileType = {
   }[];
 }[];
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   const formData = await request.formData();
   const file = formData.get("file");

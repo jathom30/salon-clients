@@ -22,6 +22,7 @@ export default defineConfig({
     setupFiles: ["./test/setup-test-env.ts"],
   },
   plugins: [
+    console.log("Vite config"),
     remix({
       basename: "/",
       buildDirectory: "build",

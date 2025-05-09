@@ -44,7 +44,7 @@ export default function App() {
     // 👆 false parameter is required for react project
   });
   return (
-    <html lang="en" className="h-full bg-base-300">
+    <html lang="en" data-theme="light" className="h-full bg-base-300">
       <head>
         <meta title="Clients" />
         <meta charSet="utf-8" />

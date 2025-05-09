@@ -45,4 +45,7 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
+  server: {
+    port: 8080,
+  },
 } as VitestConfigExport);

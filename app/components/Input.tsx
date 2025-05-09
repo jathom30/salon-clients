@@ -1,32 +1,43 @@
-import type { LegacyRef } from "react"
+import type { LegacyRef } from "react";
 
-type InputProps = {
-  name: string
-  type?: React.InputHTMLAttributes<HTMLInputElement>['type']
-  placeholder?: string
-  defaultValue?: React.HTMLAttributes<HTMLInputElement>['defaultValue']
-  onChange?: React.InputHTMLAttributes<HTMLInputElement>['onChange']
-  inputRef?: LegacyRef<HTMLInputElement>
-  isDisabled?: boolean
-  value?: string
-  autoFocus?: boolean
+interface InputProps {
+  name: string;
+  type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
+  placeholder?: string;
+  defaultValue?: React.HTMLAttributes<HTMLInputElement>["defaultValue"];
+  onChange?: React.InputHTMLAttributes<HTMLInputElement>["onChange"];
+  inputRef?: LegacyRef<HTMLInputElement>;
+  isDisabled?: boolean;
+  value?: string;
+  autoFocus?: boolean;
+  UNSAFE_className?: string;
 }
 
-export const inputStyles = "w-full p-2 text-base rounded border-1 border-text-subdued relative bg-component-background text-text"
+export const inputStyles =
+  "w-full p-2 text-base rounded border-1 border-text-subdued relative bg-component-background text-text";
 
-export const Input = ({ autoFocus = false, name, type = 'text', value, placeholder, defaultValue, onChange, inputRef, isDisabled = false }: InputProps) => {
+export const Input = ({
+  name,
+  type = "text",
+  value,
+  placeholder,
+  defaultValue,
+  onChange,
+  inputRef,
+  isDisabled = false,
+  UNSAFE_className,
+}: InputProps) => {
   return (
     <input
       type={type}
-      className="input input-bordered w-full max-w-sx"
+      className={`input input-bordered w-full max-w-sx ${UNSAFE_className}`}
       name={name}
       value={value}
       placeholder={placeholder}
       defaultValue={defaultValue}
       disabled={isDisabled}
       onChange={onChange}
-      autoFocus={autoFocus}
       ref={inputRef}
     />
-  )
-}
+  );
+};

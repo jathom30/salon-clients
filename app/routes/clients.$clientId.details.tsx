@@ -1,11 +1,7 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Client } from "@prisma/client";
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  SerializeFrom,
-} from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
   Form,
@@ -80,9 +76,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function EditDetails() {
-  const { client } = useMatchesData(
-    "routes/clients/$clientId",
-  ) as SerializeFrom<{ client: Client }>;
+  const { client } = useMatchesData("routes/clients.$clientId") as {
+    client: Client;
+  };
   const actionData = useActionData<typeof action>();
   const [phoneNumber, setPhoneNumber] = useState(client.phoneNumber || "");
 

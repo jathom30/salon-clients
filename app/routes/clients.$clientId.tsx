@@ -81,7 +81,7 @@ export default function Client() {
 
       <FlexHeader items="center">
         <Label>Notes</Label>
-        <Link to="note" kind="primary" icon={faPlus}>
+        <Link to="note/new" kind="primary" icon={faPlus}>
           New note
         </Link>
       </FlexHeader>

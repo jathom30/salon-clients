@@ -71,7 +71,7 @@ export default function Note() {
         <textarea
           defaultValue={note.body}
           rows={6}
-          className="textarea textarea-bordered"
+          className="textarea w-full"
           name="note"
         />
         {actionData?.error.note ? (

@@ -102,11 +102,7 @@ export default function NewClient() {
           ) : null}
         </Field>
         <Field name="note" label="Note" isRequired>
-          <textarea
-            name="note"
-            className="textarea textarea-bordered"
-            rows={5}
-          />
+          <textarea name="note" className="textarea w-full" rows={5} />
           {actionData?.errors.note ? (
             <ErrorMessage message={actionData.errors.note} />
           ) : null}

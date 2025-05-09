@@ -1,11 +1,7 @@
 import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { Client } from "@prisma/client";
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  SerializeFrom,
-} from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
@@ -43,9 +39,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function DeleteClient() {
-  const { client } = useMatchesData(
-    "routes/clients/$clientId",
-  ) as SerializeFrom<{ client: Client }>;
+  const { client } = useMatchesData("routes/clients.$clientId") as {
+    client: Client;
+  };
   const navigation = useNavigation();
   const isSubmitting = navigation.state !== "idle";
 
@@ -54,7 +50,7 @@ export default function DeleteClient() {
       <Navbar>
         <FlexHeader>
           <Title>Delete {client.name}</Title>
-          <Link kind="ghost" isRounded to="details">
+          <Link kind="ghost" isRounded to="..">
             <FontAwesomeIcon icon={faTimes} />
           </Link>
         </FlexHeader>

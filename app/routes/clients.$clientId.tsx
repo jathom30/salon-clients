@@ -56,7 +56,6 @@ export default function Client() {
 
   return (
     <FlexList pad={4}>
-      <Label>Name</Label>
       <ItemBox>
         <FlexHeader>
           <Title>{client.name}</Title>
@@ -70,13 +69,13 @@ export default function Client() {
           </FlexList>
         </FlexHeader>
       </ItemBox>
-      <FlexHeader>
-        <Label>Details</Label>
-        <Link isOutline icon={faPencil} to="details">
-          Edit details
-        </Link>
-      </FlexHeader>
       <ItemBox>
+        <FlexHeader>
+          <h5 className="text-sm  font-bold uppercase">Contact Details</h5>
+          <Link isOutline icon={faPencil} to="details">
+            Edit details
+          </Link>
+        </FlexHeader>
         <FlexList direction="row">
           <Label>Phone number</Label>
           <span>{client.phoneNumber ?? "--"}</span>
@@ -88,7 +87,7 @@ export default function Client() {
       </ItemBox>
 
       <FlexHeader items="center">
-        <Label>Notes</Label>
+        <h5 className="text-sm font-bold uppercase">Notes</h5>
         <div className="flex gap-2">
           <Link to="note/new" kind="primary" icon={faPlus}>
             New note
@@ -99,16 +98,12 @@ export default function Client() {
         <ItemBox key={note.id}>
           <div className="border-b border-b-gray-300 pb-2 mb-2">
             <FlexHeader>
-              <span>
-                <span className="text-xs">Created:</span>{" "}
-                {formatDate(note.createdAt)}
-              </span>
-              {formatDate(note.createdAt) !== formatDate(note.updatedAt) ? (
-                <span>
-                  <span className="text-xs">Updated:</span>{" "}
-                  {formatDate(note.updatedAt)}
-                </span>
-              ) : null}
+              <div className="flex flex-col gap-1 text-xs text-neutral">
+                <span>Created: {formatDate(note.createdAt)}</span>
+                {formatDate(note.createdAt) !== formatDate(note.updatedAt) ? (
+                  <span>Updated: {formatDate(note.updatedAt)}</span>
+                ) : null}
+              </div>
               <FlexList direction="row">
                 <Link isOutline isRounded to={`note/${note.id}`}>
                   <FontAwesomeIcon icon={faPencil} />

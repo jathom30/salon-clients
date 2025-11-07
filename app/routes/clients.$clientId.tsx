@@ -1,7 +1,6 @@
 import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import {
   Outlet,
   useLoaderData,
@@ -38,8 +37,17 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     throw new Response("Client not found", { status: 404 });
   }
   const notes = await getNotes(client.id);
-  return json({ client, notes });
+  return { client, notes };
 }
+
+const formatDate = (dateString: Date) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 export default function Client() {
   const { client, notes } = useLoaderData<typeof loader>();
@@ -81,33 +89,43 @@ export default function Client() {
 
       <FlexHeader items="center">
         <Label>Notes</Label>
-        <Link to="note/new" kind="primary" icon={faPlus}>
-          New note
-        </Link>
+        <div className="flex gap-2">
+          <Link to="note/new" kind="primary" icon={faPlus}>
+            New note
+          </Link>
+        </div>
       </FlexHeader>
       {notes.map((note) => (
         <ItemBox key={note.id}>
-          <FlexHeader>
-            <span>
-              <span className="text-xs">Created</span>{" "}
-              {new Date(note.createdAt).toDateString()}
-            </span>
-            <FlexList direction="row">
-              <Link isOutline isRounded to={`note/${note.id}`}>
-                <FontAwesomeIcon icon={faPencil} />
-              </Link>
-              {notes.length > 1 ? (
-                <Link
-                  kind="error"
-                  isOutline
-                  isRounded
-                  to={`note/delete/${note.id}`}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </Link>
+          <div className="border-b border-b-gray-300 pb-2 mb-2">
+            <FlexHeader>
+              <span>
+                <span className="text-xs">Created:</span>{" "}
+                {formatDate(note.createdAt)}
+              </span>
+              {formatDate(note.createdAt) !== formatDate(note.updatedAt) ? (
+                <span>
+                  <span className="text-xs">Updated:</span>{" "}
+                  {formatDate(note.updatedAt)}
+                </span>
               ) : null}
-            </FlexList>
-          </FlexHeader>
+              <FlexList direction="row">
+                <Link isOutline isRounded to={`note/${note.id}`}>
+                  <FontAwesomeIcon icon={faPencil} />
+                </Link>
+                {notes.length > 1 ? (
+                  <Link
+                    kind="error"
+                    isOutline
+                    isRounded
+                    to={`note/delete/${note.id}`}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </Link>
+                ) : null}
+              </FlexList>
+            </FlexHeader>
+          </div>
           <RemixLink
             to={`note/${note.id}`}
             className="rounded outline-secondary outline-offset-4 hover:outline"

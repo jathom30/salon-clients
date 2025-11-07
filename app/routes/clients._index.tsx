@@ -1,7 +1,6 @@
 import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { LoaderFunctionArgs, SerializeFrom } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import {
   useLoaderData,
   Link as RemixLink,
@@ -17,7 +16,7 @@ import { requireUserId } from "~/session.server";
 export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const clients = await getClients({ userId });
-  return json({ clients });
+  return { clients };
 }
 
 export default function ClientsList() {
@@ -75,11 +74,7 @@ export default function ClientsList() {
   );
 }
 
-const ClientLink = ({
-  client,
-}: {
-  client: SerializeFrom<{ id: string; name: string }>;
-}) => {
+const ClientLink = ({ client }: { client: { id: string; name: string } }) => {
   const navigation = useNavigation();
   const pathname = navigation.location?.pathname || "";
   const isLoading = useSpinDelay(

@@ -1,7 +1,7 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import {
   Form,
   isRouteErrorResponse,
@@ -34,7 +34,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   if (!note) {
     throw new Response("Note not found", { status: 404 });
   }
-  return json({ note });
+  return { note };
 }
 
 export async function action({ request, params }: ActionFunctionArgs) {
@@ -47,7 +47,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const note = formData.get("note")?.toString();
 
   if (!note) {
-    return json({ error: { note: "A valid note is required." } });
+    return { error: { note: "A valid note is required." } };
   }
   await updateNote(note, noteId);
   return redirect(`/clients/${clientId}`);

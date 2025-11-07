@@ -56,7 +56,6 @@ export default function Client() {
 
   return (
     <FlexList pad={4}>
-      {/* <Label>Name</Label> */}
       <ItemBox>
         <FlexHeader>
           <Title>{client.name}</Title>

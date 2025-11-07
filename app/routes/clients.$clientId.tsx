@@ -98,7 +98,7 @@ export default function Client() {
         <ItemBox key={note.id}>
           <div className="border-b border-b-gray-300 pb-2 mb-2">
             <FlexHeader>
-              <div className="flex flex-col gap-1 text-xs text-neutral">
+              <div className="flex flex-col gap-1 text-xs text-base-content">
                 <span>Created: {formatDate(note.createdAt)}</span>
                 {formatDate(note.createdAt) !== formatDate(note.updatedAt) ? (
                   <span>Updated: {formatDate(note.updatedAt)}</span>
